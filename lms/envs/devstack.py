@@ -64,7 +64,8 @@ MIDDLEWARE_CLASSES += [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
-INTERNAL_IPS = ('127.0.0.1',)
+# INTERNAL_IPS = ('127.0.0.1',)
+INTERNAL_IPS = ()
 
 DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.versions.VersionsPanel',
@@ -274,3 +275,6 @@ if os.path.isfile(join(dirname(abspath(__file__)), 'private.py')):
 MODULESTORE = convert_module_store_setting_if_needed(MODULESTORE)
 
 SECRET_KEY = '85920908f28904ed733fe576320db18cabd7b6cd'
+
+ICREDIT_API_URL = 'https://testicredit.rivhit.co.il/API/'
+ICREDIT_GROUP_PRIVATE_TOKEN = 'c23b6530-ea60-424a-86e2-f55501e4a907'
