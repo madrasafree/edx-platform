@@ -16,10 +16,10 @@ def icredit_get_url(request):
         json={
             'GroupPrivateToken': settings.ICREDIT_GROUP_PRIVATE_TOKEN,
             'Items': [{
-                'CatalogNumber': 'XXX',
+                'CatalogNumber': request.POST.get('Item[CatalogNumber]'),
                 'Quantity': '1',
-                'UnitPrice': '1',
-                'Description': '1',
+                'UnitPrice': request.POST.get('Item[UnitPrice]'),
+                'Description': request.POST.get('Item[Description]'),
             }],
             'RedirectURL': settings.LMS_ROOT_URL,
             'EmailAddress': request.POST.get('email'),
