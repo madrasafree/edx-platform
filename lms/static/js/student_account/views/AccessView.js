@@ -36,6 +36,7 @@
                     hintedLogin: {}
                 },
                 nextUrl: '/dashboard',
+                registrationCompletedUrl: '/madrasafree/registration_completed/',
             // The form currently loaded
                 activeForm: '',
 
@@ -134,6 +135,7 @@
                 loadForm: function(type) {
                     var loadFunc = _.bind(this.load[type], this);
                     loadFunc(this.formDescriptions[type]);
+                    $("body").trigger({ type: "formLoaded", formType: type });
                 },
 
                 load: {
@@ -219,7 +221,7 @@
                         });
 
                     // Listen for 'auth-complete' event so we can enroll/redirect the user appropriately.
-                        this.listenTo(this.subview.register, 'auth-complete', this.authComplete);
+                        this.listenTo(this.subview.register, 'auth-complete', this.registrationCompleted);
                     },
 
                     institution_login: function(unused) {
@@ -324,6 +326,10 @@
                     } else {
                         this.redirect(this.nextUrl);
                     }
+                },
+
+                registrationCompleted: function() {
+                    this.redirect(this.registrationCompletedUrl);
                 },
 
             /**
