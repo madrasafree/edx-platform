@@ -136,6 +136,7 @@ class FormDescription(object):
         forms.ChoiceField: "select",
         forms.TypedChoiceField: "select",
         forms.Textarea: "textarea",
+        forms.NullBooleanField: "checkbox",
         forms.BooleanField: "checkbox",
         forms.EmailField: "email",
     }
