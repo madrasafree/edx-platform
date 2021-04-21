@@ -8,6 +8,8 @@ from django.urls import reverse
 
 import requests
 
+from madrasafree.models import ExtraInfo
+
 
 @login_required
 def registration_completed(request):
@@ -23,9 +25,26 @@ def icredit_payment_success(request):
         'user': request.user,
     }
     extra_info = request.user.extrainfo
+    extra_info.support_is_donor = True
     extra_info.support_payment_response = request.GET.get('Token')
     extra_info.save()
     return render_to_response('madrasafree/icredit_payment_success.html', context, request=request)
+
+
+@login_required
+def donate(request):
+    context = {
+        'user': request.user,
+    }
+    return render_to_response('madrasafree/donate.html', context, request=request)
+
+
+@login_required
+def donate_success(request):
+    context = {
+        'user': request.user,
+    }
+    return render_to_response('madrasafree/donate_success.html', context, request=request)
 
 
 @login_required
@@ -34,7 +53,12 @@ def icredit_payment_success(request):
 def icredit_get_url(request):
     user = request.user
     amount = request.POST.get('Item[UnitPrice]')
-    extra_info = request.user.extrainfo
+    try:
+        extra_info = request.user.extrainfo
+    except ExtraInfo.DoesNotExist:
+        extra_info = ExtraInfo(
+            user=request.user,
+        )
     extra_info.support_amount = amount
     data = {
         'GroupPrivateToken': settings.ICREDIT_GROUP_PRIVATE_TOKEN,
