@@ -13584,7 +13584,7 @@ msgstr "אני מסכים {link_start}לקוד האתי{link_end}"
 #: lms/templates/register-form.html lms/templates/signup_modal.html
 #: themes/stanford-style/lms/templates/register-form.html
 msgid "Create My Account"
-msgstr "צור חשבון"
+msgstr "יצירת חשבון"
 
 #: lms/templates/register-shib.html
 #: themes/stanford-style/lms/templates/register-shib.html
