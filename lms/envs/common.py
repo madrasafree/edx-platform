@@ -3469,6 +3469,7 @@ RETIREMENT_STATES = [
     'COMPLETE',
 ]
 
+SESSION_COOKIE_SAMESITE = 'none'
 SESSION_COOKIE_SAMESITE_FORCE_ALL = True
 
 ############## Settings for Writable Gradebook  #########################
