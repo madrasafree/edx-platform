@@ -1226,6 +1226,8 @@ CREDIT_NOTIFICATION_CACHE_TIMEOUT = 5 * 60 * 60
 ################################# Middleware ###################################
 
 MIDDLEWARE_CLASSES = [
+    'django_cookies_samesite.middleware.CookiesSameSite',
+
     'openedx.core.lib.x_forwarded_for.middleware.XForwardedForMiddleware',
 
     'crum.CurrentRequestUserMiddleware',
@@ -3466,6 +3468,8 @@ RETIREMENT_STATES = [
     'ABORTED',
     'COMPLETE',
 ]
+
+SESSION_COOKIE_SAMESITE_FORCE_ALL = True
 
 ############## Settings for Writable Gradebook  #########################
 # If running a Gradebook container locally,
