@@ -214,7 +214,7 @@ def _apply_third_party_auth_overrides(request, form_desc):
 class RegistrationFormFactory(object):
     """HTTP end-points for creating a new user. """
 
-    DEFAULT_FIELDS = ["first_name", "last_name", "email", "name", "username", "password", "honor_code"]
+    DEFAULT_FIELDS = ["first_name", "last_name", "email", "name", "username", "password"]
 
     EXTRA_FIELDS = [
         "confirm_email",
@@ -229,6 +229,7 @@ class RegistrationFormFactory(object):
         "title",
         "mailing_address",
         "goals",
+        "honor_code",
         "terms_of_service",
         "profession",
         "specialty",
@@ -292,15 +293,6 @@ class RegistrationFormFactory(object):
         form_desc = FormDescription("post", reverse("user_api_registration"))
         self._apply_third_party_auth_overrides(request, form_desc)
 
-        # Extra fields configured in Django settings
-        # may be required, optional, or hidden
-        for field_name in self.EXTRA_FIELDS:
-            if self._is_field_visible(field_name):
-                self.field_handlers[field_name](
-                    form_desc,
-                    required=self._is_field_required(field_name)
-                )
-
         # Custom form fields can be added via the form set in settings.REGISTRATION_EXTENSION_FORM
         custom_form = get_registration_extension_form()
 
@@ -335,6 +327,15 @@ class RegistrationFormFactory(object):
                     options=getattr(field, 'choices', None), error_messages=field.error_messages,
                     include_default_option=field_options.get('include_default_option'),
                 )
+
+            # Extra fields configured in Django settings
+            # may be required, optional, or hidden
+            for field_name in self.EXTRA_FIELDS:
+                if self._is_field_visible(field_name):
+                    self.field_handlers[field_name](
+                        form_desc,
+                        required=self._is_field_required(field_name)
+                    )
         else:
             # Go through the fields in the fields order and add them if they are required or visible
             for field_name in self.field_order:
@@ -346,7 +347,6 @@ class RegistrationFormFactory(object):
                         required=self._is_field_required(field_name)
                     )
 
-        print ('form_desc', form_desc)
         return form_desc
 
     def _add_email_field(self, form_desc, required=True):
