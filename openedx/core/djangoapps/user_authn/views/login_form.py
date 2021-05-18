@@ -43,7 +43,7 @@ log = logging.getLogger(__name__)
 
 @require_http_methods(['GET'])
 @ensure_csrf_cookie
-@xframe_allow_whitelisted
+# @xframe_allow_whitelisted
 def login_and_registration_form(request, initial_mode="login"):
     """Render the combined login/registration form, defaulting to login
 
