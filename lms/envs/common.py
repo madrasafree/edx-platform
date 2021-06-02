@@ -1091,7 +1091,7 @@ def _make_locale_paths(settings):
     if settings.ENABLE_COMPREHENSIVE_THEMING:
         # Add locale paths to settings for comprehensive theming.
         for locale_path in settings.COMPREHENSIVE_THEME_LOCALE_PATHS:
-            locale_paths += (path(locale_path), )
+            locale_paths.insert(0, path(locale_path))
     return locale_paths
 LOCALE_PATHS = _make_locale_paths
 derived('LOCALE_PATHS')
