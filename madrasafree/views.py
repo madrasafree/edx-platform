@@ -80,6 +80,7 @@ def icredit_get_url(request):
         data['SaleType'] = 2
         data['CreateRecurringSale'] = True
         data['RecurringSaleAutoCharge'] = True
+        data['RecurringSaleDay'] = 15
         data['RecurringSaleCycle'] = 3
         data['RecurringSaleStep'] = 1
         data['RecurringSaleCount'] = 0
