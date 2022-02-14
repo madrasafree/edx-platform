@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from django.http.response import HttpResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
@@ -63,12 +66,11 @@ def icredit_get_url(request):
     data = {
         'GroupPrivateToken': settings.ICREDIT_GROUP_PRIVATE_TOKEN,
         'Items': [{
-            'CatalogNumber': '1',
             'Quantity': '1',
             'UnitPrice': amount,
             'Description': '',
         }],
-        'RedirectURL': settings.LMS_ROOT_URL + reverse('icredit_payment_success'),
+        'RedirectURL': settings.LMS_ROOT_URL + reverse('donate_success'),
         'EmailAddress': user.email,
         'CustomerFirstName': user.first_name,
         'CustomerLastName': user.last_name,
@@ -82,8 +84,11 @@ def icredit_get_url(request):
         data['RecurringSaleStep'] = 1
         data['RecurringSaleCount'] = 0
         extra_info.support_is_periodical = True
+        data['Items'][0]['Description'] = 'תמיכה חודשית במדרסה'
     else:
+        data['SaleType'] = 1
         extra_info.support_is_periodical = False
+        data['Items'][0]['Description'] = 'תמיכה חד פעמית במדרסה'
 
     extra_info.save()
     response = requests.post(
